@@ -64,11 +64,11 @@ for values in data.values():
 print('******** END ORIGINAL DATA **********')
 print("\n")
 
-#Transfrom from columns to rows function
-data=unpivot_data(data,column_index=['code','text']).copy()
-
 
 print('******** START TRANSFORM DATA **********')
+
+#Transfrom from columns to rows function
+data=unpivot_data(data,column_index=['code','text']).copy()
 
 columns=[]
 for values in data.values():
