@@ -1,7 +1,7 @@
 
 #init translation code dictionary
-culture_code={'english': 'en-US',
-                  'chinese':'zh-CH'}
+culture_code={	'english': 'en-US',
+              	'chinese':'zh-CH'}
 
 #transform function
 def get_culture_code(key):
@@ -40,37 +40,44 @@ data={1:{'code':'hi','text':'Hi','chinese':'你好'},
 
 #print original table and transform table
 print('******** START ORIGINAL DATA **********')
-
+columns=[]
 for values in data.values():
-	columns=[]
 	for key in list(values.keys()):
-		if "{:<20}|".format(get_culture_code(key)) not in columns:
-			columns.append("{:<20}| ".format(get_culture_code(key)))
+		if key not in columns:
+			columns.append(key)
 			
-print(f"{'-' * 89}")	
-print(''.join(columns))
-print(f"{'-' * 89}")
+print(f"{'-' * 120}")	
+print(''.join(["{:<20}|".format(get_culture_code(key)) for key in columns]))
+print(f"{'-' * 120}")
 
 for values in data.values():
-	orig_values = ["{:<20}|".format(values[key]) for key in list(values.keys()) ]
+	orig_values=[]
+	for col in columns:
+		try:
+			orig_values.append("{:<20}|".format(values[col]))
+		except:
+			orig_values.append("{:<20}|".format(''))
+
 	print(''.join(orig_values))
-	print(f"{'-' * 89}")	
+	print(f"{'-' * 120}")	
 
 print('******** END ORIGINAL DATA **********')
 print("\n")
 
+#Transfrom from columns to rows function
 data=unpivot_data(data,column_index=['code','text']).copy()
+
 
 print('******** START TRANSFORM DATA **********')
 
+columns=[]
 for values in data.values():
-	columns=[]
 	for key in list(values.keys()):
-		if "{:<20}|".format(get_culture_code(key)) not in columns:
-			columns.append("{:<20}| ".format(get_culture_code(key)))
+		if key not in columns:
+			columns.append(key)
 			
 print(f"{'-' * 89}")	
-print(''.join(columns))
+print(''.join(["{:<20}|".format(get_culture_code(key)) for key in columns]))
 print(f"{'-' * 89}")
 
 for values in data.values():
