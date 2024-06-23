@@ -1,7 +1,9 @@
 
 #init translation code dictionary
-culture_code={	'english': 'en-US',
-              	'chinese':'zh-CH'}
+culture_code={	
+			'english': 'en-US',
+            'chinese':'zh-CH'
+			 }
 
 #transform function
 def get_culture_code(key):
@@ -13,7 +15,7 @@ def get_culture_code(key):
 
 	return code
 
-def unpivot_data(data:dict,column_index):
+def unpivot_data(data:dict,column_index,column_name):
 	
 	dict_index=1
 	final_data={}
@@ -25,7 +27,7 @@ def unpivot_data(data:dict,column_index):
 				for index in column_index:
 					final_data[dict_index][index]=values[index]
 				
-				final_data[dict_index]['culture']=get_culture_code(key)
+				final_data[dict_index][column_name]=key
 				final_data[dict_index]['values']=values[key]
 				dict_index+=1
 
@@ -40,6 +42,8 @@ data={1:{'code':'hi','text':'Hi','chinese':'你好'},
 
 #print original table and transform table
 print('******** START ORIGINAL DATA **********')
+
+#columns
 columns=[]
 for values in data.values():
 	for key in list(values.keys()):
@@ -47,16 +51,17 @@ for values in data.values():
 			columns.append(key)
 			
 print(f"{'-' * 120}")	
-print(''.join(["{:<20}|".format(get_culture_code(key)) for key in columns]))
+print(''.join(["|{:<20}".format(get_culture_code(key)) for key in columns]))
 print(f"{'-' * 120}")
 
+#values
 for values in data.values():
 	orig_values=[]
 	for col in columns:
 		try:
-			orig_values.append("{:<20}|".format(values[col]))
+			orig_values.append("|{:<20}".format(values[col]))
 		except:
-			orig_values.append("{:<20}|".format(''))
+			orig_values.append("|{:<20}".format(''))
 
 	print(''.join(orig_values))
 	print(f"{'-' * 120}")	
@@ -65,11 +70,14 @@ print('******** END ORIGINAL DATA **********')
 print("\n")
 
 
+
 print('******** START TRANSFORM DATA **********')
 
-#Transfrom from columns to rows function
-data=unpivot_data(data,column_index=['code','text']).copy()
+#Call Transfrom from columns to rows function
+data=unpivot_data(data,column_index=['code','text'],column_name='culture').copy()
 
+
+#columns
 columns=[]
 for values in data.values():
 	for key in list(values.keys()):
@@ -77,11 +85,12 @@ for values in data.values():
 			columns.append(key)
 			
 print(f"{'-' * 89}")	
-print(''.join(["{:<20}|".format(get_culture_code(key)) for key in columns]))
+print(''.join(["|{:<20}".format(get_culture_code(key)) for key in columns]))
 print(f"{'-' * 89}")
 
+#values
 for values in data.values():
-	orig_values = ["{:<20}|".format(values[key]) for key in list(values.keys()) ]
+	orig_values = ["|{:<20}".format(get_culture_code(values[key])) for key in list(values.keys()) ]
 	print(''.join(orig_values))
 	print(f"{'-' * 89}")	
 
