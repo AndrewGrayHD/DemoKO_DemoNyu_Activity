@@ -1,8 +1,8 @@
 
-#init translation code dictionary
+#set initial translation culture dictionary
 culture_code={	
-			'english': 'en-US',
-            'chinese':'zh-CH'
+		'english': 'en-US',
+            	'chinese':'zh-CH'
 			 }
 
 #transform function
@@ -20,17 +20,20 @@ def unpivot_data(data:dict,column_index,column_name):
 	dict_index=1
 	final_data={}
 
+	#1
 	for values in data.values():
+		2#
 		for key in list(values.keys()):
 			final_data.update({dict_index:{}})
 			if  key not in column_index:
+				#3
 				for index in column_index:
 					final_data[dict_index][index]=values[index]
-				
+				#4		
 				final_data[dict_index][column_name]=key
 				final_data[dict_index]['values']=values[key]
 				dict_index+=1
-
+	#5
 	return 	final_data
 
 
